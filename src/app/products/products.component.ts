@@ -28,7 +28,7 @@ export class ProductsComponent implements OnInit {
   }
   handDeleteProduct(p: Product) {
     let conf=confirm("Are you sure");
-    if(!conf) return;
+    if(!conf) return; //if(conf==false) return;
   this.productService.deleteProduct(p.id).subscribe({
     next:(data)=>{
     //this.handleGetAllProducts()
@@ -36,5 +36,17 @@ export class ProductsComponent implements OnInit {
       this.products.splice(index,1);
     }
   })
+  }
+
+  handleSetPromotion(p: Product) {
+    let promo=p.promotion;
+    this.productService.setPromotion(p.id).subscribe({
+      next:(data)=>{
+        p.promotion=!promo;
+      },
+      error:err => {
+        this.errorMessage=err;
+      }
+    })
   }
 }
